@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="abhinav_testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ItemQuantity" Type="int" Nullable="false" />
+    <Property Name="ItemPrice" Type="int" />
+    <Property Name="ItemDescription" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Orderdb">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNo" Type="int" />
+    <Property Name="TotalPrice" Type="int" Nullable="false" />
+    <Property Name="TotalQuantity" Type="int" Nullable="false" />
+    <Property Name="OrderDate" Type="date" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="ItemQuantity" Type="int" Nullable="false" />
+    <Property Name="ItemPrice" Type="int" Nullable="false" />
+    <Property Name="ItemTotal" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblCustomer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="100" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="AlternateNumber" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_OrderItem_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Orderdb">
+    <End Role="Orderdb" Type="Self.Orderdb" Multiplicity="1" />
+    <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orderdb">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orderdb_CustomerId_FK">
+    <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1" />
+    <End Role="Orderdb" Type="Self.Orderdb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCustomer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="Orderdb">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="abhinav_testModelStoreContainer">
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orderdb" EntityType="Self.Orderdb" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderItem" EntityType="Self.OrderItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_OrderItem_Item" Association="Self.FK_OrderItem_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Orderdb" Association="Self.FK_OrderItem_Orderdb">
+      <End Role="Orderdb" EntitySet="Orderdb" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="Orderdb_CustomerId_FK" Association="Self.Orderdb_CustomerId_FK">
+      <End Role="tblCustomer" EntitySet="tblCustomer" />
+      <End Role="Orderdb" EntitySet="Orderdb" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

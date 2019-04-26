@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="abhinav_testModelStoreContainer" CdmEntityContainer="abhinav_testEntities2">
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="abhinav_testModel.Item">
+        <MappingFragment StoreEntitySet="Item">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
+          <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orderdbs">
+      <EntityTypeMapping TypeName="abhinav_testModel.Orderdb">
+        <MappingFragment StoreEntitySet="Orderdb">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderItems">
+      <EntityTypeMapping TypeName="abhinav_testModel.OrderItem">
+        <MappingFragment StoreEntitySet="OrderItem">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
+          <ScalarProperty Name="ItemTotal" ColumnName="ItemTotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblCustomers">
+      <EntityTypeMapping TypeName="abhinav_testModel.tblCustomer">
+        <MappingFragment StoreEntitySet="tblCustomer">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="AlternateNumber" ColumnName="AlternateNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

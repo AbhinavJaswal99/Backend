@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="abhinav_testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemQuantity" Type="Int32" Nullable="false" />
+    <Property Name="ItemPrice" Type="Int32" />
+    <Property Name="ItemDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="OrderItems" Relationship="Self.FK_OrderItem_Item" FromRole="Item" ToRole="OrderItem" />
+  </EntityType>
+  <EntityType Name="Orderdb">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNo" Type="Int32" />
+    <Property Name="TotalPrice" Type="Int32" Nullable="false" />
+    <Property Name="TotalQuantity" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="OrderItems" Relationship="Self.FK_OrderItem_Orderdb" FromRole="Orderdb" ToRole="OrderItem" />
+    <NavigationProperty Name="tblCustomer" Relationship="Self.Orderdb_CustomerId_FK" FromRole="Orderdb" ToRole="tblCustomer" />
+  </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="ItemQuantity" Type="Int32" Nullable="false" />
+    <Property Name="ItemPrice" Type="Int32" Nullable="false" />
+    <Property Name="ItemTotal" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="Self.FK_OrderItem_Item" FromRole="OrderItem" ToRole="Item" />
+    <NavigationProperty Name="Orderdb" Relationship="Self.FK_OrderItem_Orderdb" FromRole="OrderItem" ToRole="Orderdb" />
+  </EntityType>
+  <EntityType Name="tblCustomer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AlternateNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orderdbs" Relationship="Self.Orderdb_CustomerId_FK" FromRole="tblCustomer" ToRole="Orderdb" />
+  </EntityType>
+  <Association Name="FK_OrderItem_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Orderdb">
+    <End Role="Orderdb" Type="Self.Orderdb" Multiplicity="1" />
+    <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orderdb">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orderdb_CustomerId_FK">
+    <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1" />
+    <End Role="Orderdb" Type="Self.Orderdb" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCustomer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="Orderdb">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="abhinav_testEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="Orderdbs" EntityType="Self.Orderdb" />
+    <EntitySet Name="OrderItems" EntityType="Self.OrderItem" />
+    <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
+    <AssociationSet Name="FK_OrderItem_Item" Association="Self.FK_OrderItem_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="OrderItem" EntitySet="OrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Orderdb" Association="Self.FK_OrderItem_Orderdb">
+      <End Role="Orderdb" EntitySet="Orderdbs" />
+      <End Role="OrderItem" EntitySet="OrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="Orderdb_CustomerId_FK" Association="Self.Orderdb_CustomerId_FK">
+      <End Role="tblCustomer" EntitySet="tblCustomers" />
+      <End Role="Orderdb" EntitySet="Orderdbs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
